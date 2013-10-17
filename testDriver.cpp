@@ -54,6 +54,10 @@ void testDriver(){
       cout << *itr << " ";
   }
   cout << endl;
+
+  char thing[10];
+  cin >> thing;
+  cout << atoi(thing)*3;
 }
 
 int main() {

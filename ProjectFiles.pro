@@ -8,11 +8,13 @@ SOURCES += \
     testDriver.cpp \
     case.cpp \
     client.cpp \
-    UIDetectiveOffice.cpp
+    UIDetectiveOffice.cpp \
+    helperFunctions.cpp
 
 HEADERS += \
     Date.h \
     client.h \
     case.h \
-    UIDetectiveOffice.h
+    UIDetectiveOffice.h \
+    helperFunctions.h
 

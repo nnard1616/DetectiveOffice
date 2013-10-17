@@ -9,6 +9,8 @@ class UIDetectiveOffice
 {
 private:
     list<Client> clientlist;
+    Client* currClient;
+    Case* currCase;
 
     char menu();
 

@@ -11,9 +11,11 @@ class Client{
 
     void addCase(Case inCase);
     void removeCase(Case *inCase);
-    void findCase(string query);
-    float calcDues(float inRate, float inHours);
-    void printHi(){cout << "Hi!" << endl;}
+    Case *findCase(string query);
+    void calcDues();
+    void printInfo();
+
+    string lname(){return LastName;}
 
   private:
     vector<Case> *caseList;
