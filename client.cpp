@@ -48,10 +48,12 @@ void Client::addCase(Case inCase){
     caseList->push_back(inCase);
 }
 
-void Client::removeCase(Case *inCase){//test when making UI
+void Client::removeCase(Case *inCase){
     for (auto itr = caseList->begin(); itr != caseList->end(); itr++){
-        if(&*itr == inCase)
+        if(&*itr == inCase){
             caseList->erase(itr);
+            break;
+        }
     }
 }
 
@@ -114,8 +116,8 @@ void Client::sortCases(){
         for (auto itr = caseList->begin(); itr != caseList->end(); itr++){
             if(*itr < *earliest)
                 earliest = itr;
-            else if(not(*itr<*earliest) && not (*earliest < *itr)) //same start date
-                if (upper(itr->description()) < upper(earliest->description()))
+            else if(not(*itr < *earliest) && not(*earliest < *itr)) //same start date
+                if (upper(itr->description()) < upper(earliest->description()))//sort by description
                     earliest = itr;
         }
         ordered.push_back(*earliest);

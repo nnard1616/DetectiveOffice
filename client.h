@@ -1,10 +1,9 @@
 #ifndef Client_h
 #define Client_h
-#include <vector>
 #include "case.h"
 
 class Client{
-  friend ostream& operator<< (ostream& osObject, const Client& query);
+  friend ostream& operator<< (ostream& osObject, const Client& query);//prints client info and case info
   friend bool operator<(const Client& a, const Client& b);//for sorting by client lastname
   public:
     Client();
@@ -14,7 +13,7 @@ class Client{
     void removeCase(Case *inCase);
     Case *findCase(string query);
     void calcDues();
-    void printInfo();
+    void printInfo();//prints just client info, not case info
 
     string lname(){return LastName;}
     void sortCases();

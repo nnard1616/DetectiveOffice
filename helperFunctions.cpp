@@ -91,12 +91,10 @@ bool greedy_phrase_comparison(const string &searchField, const string &query){
     vector<string> queryTerms = split(query);
     for (auto x = queryTerms.begin(); x != queryTerms.end(); x++)
         for (auto y = fieldTerms.begin(); y != fieldTerms.end(); y++)
-        {
             if (case_insensitive_comparison(*x, *y) == 0)
                 return true;
-            else
-                return false;
-        }
+
+    return false;
 }
 
 string upper(const string query){

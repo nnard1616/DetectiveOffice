@@ -141,9 +141,11 @@ void UIDetectiveOffice::addClient(){
     float rt, ah;
     int eh;
     do{
-        cout << "Would you like to add a case to the client's file? (y/n): ";
-        cin >> inchoice;
-        choice = toupper(inchoice[0]);
+        do{
+            cout << "Would you like to add a case to the client's file? (y/n): ";
+            cin >> inchoice;
+            choice = toupper(inchoice[0]);
+        } while (choice != 'Y' && choice != 'N');
 
         if (choice == 'Y'){
             do{

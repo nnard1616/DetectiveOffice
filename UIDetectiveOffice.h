@@ -15,7 +15,7 @@ private:
     char menu();
 
     void addClient();
-    void findClient();
+    void findClient();//find client by last name
     void removeClient();
     void printClientInfo();//prints name and address
     void printclientFile();//prints name and address plus case list
