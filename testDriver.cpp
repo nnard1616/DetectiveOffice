@@ -25,7 +25,7 @@ void testDriver(){
   Frank.addCase(testCase);
   Frank.addCase(Case("Lost Dog", Date(10,11, 2013), Date(10,13,2013), 20.5, 9, 20));
   Frank.addCase(Case("Missing child", Date(6,12, 2013), Date(7,13,2013), 7.8, 100, 2));
-  Frank.addCase(Case("Cheating Hussie", Date(7,12, 2013), 5.5, 9));
+  Frank.addCase(Case("cheating Hussie", Date(7,12, 2013), 5.5, 9));
 
   Client Buck("Grimmes", "Christie", "45654 Evergreen Terr", "684651", "f.grimmes@gmail.com");
   Frank.removeCase(&testCase);
@@ -43,7 +43,6 @@ void testDriver(){
 
   cout << "------------------------------------" << endl;
 
-  cout << case_insensitive_comparison(str3, str4) << endl;
 
 
   list<int> iList;

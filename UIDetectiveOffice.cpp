@@ -187,7 +187,7 @@ void UIDetectiveOffice::findClient(){
     cin >> qName;
     vector<Client*> hits;
     for (auto itr = clientlist.begin(); itr != clientlist.end(); itr++)
-        if (case_insensitive_comparison(itr->lname(), qName) == 0)
+        if (upper(itr->lname()) == upper(qName) )
             hits.push_back(&*itr);
     if (hits.size() > 1){
         cout << "Found " << hits.size() << " clients by that name: " << endl;

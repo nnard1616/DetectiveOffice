@@ -13,10 +13,10 @@ ostream& operator<< (ostream& osObject, const Client& query){
 }
 
 bool operator< (const Client& a, const Client& b){
-    if (case_insensitive_comparison(a.LastName, b.LastName) < 0)
+    if (upper(a.LastName) < upper(b.LastName))
         return true;
-    else if (case_insensitive_comparison(a.LastName, b.LastName) == 0){
-        if (case_insensitive_comparison(a.FirstName, b.FirstName) < 0)
+    else if (upper(a.LastName) == upper(b.LastName)){
+        if (upper(a.FirstName) < upper(b.FirstName))
             return true;
         else
             return false;
