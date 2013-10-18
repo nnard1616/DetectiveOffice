@@ -98,3 +98,13 @@ bool greedy_phrase_comparison(const string &searchField, const string &query){
                 return false;
         }
 }
+
+string upper(const string query){
+    string big;
+    string letter;
+    for (auto itr = query.begin(); itr != query.end(); itr++){
+        letter = toupper(*itr);
+        big.append(letter);
+    }
+    return big;
+}

@@ -12,6 +12,19 @@ ostream& operator<< (ostream& osObject, const Client& query){
     return osObject;
 }
 
+bool operator< (const Client& a, const Client& b){
+    if (case_insensitive_comparison(a.LastName, b.LastName) < 0)
+        return true;
+    else if (case_insensitive_comparison(a.LastName, b.LastName) == 0){
+        if (case_insensitive_comparison(a.FirstName, b.FirstName) < 0)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
 Client::Client(){
     LastName = "";
     FirstName = "";
@@ -92,4 +105,21 @@ void Client::calcDues(){
 
     cout << "Actual Amount Due for Completed Cases: $" << actDue << endl
          << "Estimated Amount Due for Incomplete Cases: $" << estDue << endl;
+}
+
+void Client::sortCases(){
+    vector<Case> ordered;
+    do{
+        vector<Case>::iterator earliest = caseList->begin();
+        for (auto itr = caseList->begin(); itr != caseList->end(); itr++){
+            if(*itr < *earliest)
+                earliest = itr;
+            else if(not(*itr<*earliest) && not (*earliest < *itr)) //same start date
+                if (upper(itr->description()) < upper(earliest->description()))
+                    earliest = itr;
+        }
+        ordered.push_back(*earliest);
+        caseList->erase(earliest);
+    } while (caseList->size() != 0);
+    caseList->swap(ordered);//I'm so fucking clever. xD
 }

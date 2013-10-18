@@ -16,7 +16,9 @@ char UIDetectiveOffice::menu(){
             << "R) Remove client just found" << endl
             << "I) Print client info just found" << endl
             << "C) Print client info and case info just found" << endl
+            << "Q) Add case to client just found" << endl
             << "S) Search for case for client just found" << endl
+            << "P) Print info for case just found" << endl
             << "D) Delete case just found" << endl
             << "E) Print total amount due for client just found" << endl
             << "L) List all clients on file" << endl
@@ -25,7 +27,7 @@ char UIDetectiveOffice::menu(){
        cin >>  inchoice;
        choice = toupper(inchoice[0]);
        string choicecheck(1,choice);
-       if (choicecheck.find_first_of("AFRICSDELKX") == string::npos)
+       if (choicecheck.find_first_of("AFRICQSPDELKX") == string::npos)
            cout << inchoice << " not in the list of options; redo" << endl;
        else
            notanoption = false;
@@ -53,8 +55,14 @@ void UIDetectiveOffice::process() {
             case 'C':
               printclientFile();
               break;
+            case 'Q':
+              addCaseToClient();
+              break;
             case 'S':
               findCaseFromClient();
+              break;
+            case 'P':
+              printCaseInfo();
               break;
             case 'D':
               removeCaseFromClient();
@@ -82,26 +90,31 @@ void UIDetectiveOffice::populateClients(){
     Client1.addCase(Case("Missing Fork", Date(10, 3, 2013), Date(10, 7, 2013), 10.3, 2, 95));
     Client1.addCase(Case("Raccoon in Attic", Date(9, 3, 2013), Date(9, 7, 2013), 50, 2, 3));
     Client1.addCase(Case("Missing Spatula", Date(10, 1, 2013), 7.5, 2));
+    Client1.sortCases();
     clientlist.push_back(Client1);
 
     Client Client2("Star", "Patrick", "15 Rock Rd", "154112", "rock@gmail.com");
     Client2.addCase(Case("Lost Under Rock", Date(10, 13, 2013), 5.5, 45));
     Client2.addCase(Case("Lost Rock at Beach", Date(10, 3, 2013), Date(10, 7, 2013), 10.3, 2, 95));
     Client2.addCase(Case("Pants on Head", Date(10, 3, 2013), Date(10, 7, 2013), 10.3, 2, 95));
+    Client2.sortCases();
     clientlist.push_back(Client2);
 
     Client Client3("Squarepants", "SpongeBob", "15 Pineapple Rd", "154112", "pineapple@gmail.com");
     Client3.addCase(Case("Stolen Spatula", Date(10, 3, 2013), Date(10, 7, 2013), 10.3, 2, 95));
     Client3.addCase(Case("Missing Spats", Date(8, 3, 2013), Date(10, 7, 2013), 10.3, 2, 95));
     Client3.addCase(Case("Friend Stole Pet Snail", Date(6, 3, 2013), Date(10, 7, 2013), 10.3, 2, 95));
+    Client3.sortCases();
     clientlist.push_back(Client3);
 
-    Client Frank("Grimmes", "Frank", "45654 Evergreen Terr", "684651", "f.grimmes@gmail.com");
-    Frank.addCase(Case("Lost Dog", Date(10,12, 2013), Date(10,13,2013), 20.5, 9, 20));
-    Frank.addCase(Case("Cheating Hussie", Date(9,12, 2013), 5.5, 9));
+    Client Frank("Grimmes", "frank", "45654 Evergreen Terr", "684651", "f.grimmes@gmail.com");
+    Frank.addCase(Case("Lost Dog", Date(10,11, 2013), Date(10,13,2013), 20.5, 9, 20));
     Frank.addCase(Case("Missing child", Date(6,12, 2013), Date(7,13,2013), 7.8, 100, 2));
-    Frank.addCase(Case("Lost Car", Date(7,12, 2013), Date(10,9,2013), 5.0, 17, 15));
+    Frank.addCase(Case("Stolen car", Date(7,12, 2013), Date(10,9,2013), 5.0, 17, 15));
+    Frank.addCase(Case("cheating Hussie", Date(7,12, 2013), 5.5, 9));
+    Frank.sortCases();
     clientlist.push_back(Frank);
+    clientlist.sort();
 
 }
 
@@ -153,12 +166,16 @@ void UIDetectiveOffice::addClient(){
                 cout << "Please enter actual hours to completion: ";
                 cin >> ah;
                 temp.addCase(Case(desc, sDate, eDate, rt, eh, ah));
+                temp.sortCases();
             }
-            else
+            else{
                 temp.addCase(Case(desc, sDate, rt, eh));
+                temp.sortCases();
+            }
         }
     } while (choice == 'Y');
     clientlist.push_back(temp);
+    clientlist.sort();
 }
 
 void UIDetectiveOffice::findClient(){
@@ -218,6 +235,44 @@ void UIDetectiveOffice::printclientFile(){
         cout << *currClient << endl;
 }
 
+void UIDetectiveOffice::addCaseToClient(){
+    if (currClient == nullptr)
+        cout << "No client is selected" << endl;
+    else{
+        string iscompleted;
+        string desc;
+        Date sDate, eDate;
+        float rt, ah;
+        int eh;
+        do{
+            cout << "Is this case completed? (y/n): ";
+            cin >> iscompleted;
+        } while (toupper(iscompleted[0]) != 'Y' && toupper(iscompleted[0]) != 'N');
+
+        cout << "Please enter Case Description: ";
+        getline(cin, desc);
+        getline(cin, desc);
+        cout << "Please enter start date (mm dd yyyy): ";
+        cin >> sDate;
+        cout << "Please enter pay rate: ";
+        cin >> rt;
+        cout << "Please enter estimated hours to completion: ";
+        cin  >> eh;
+        if (toupper(iscompleted[0]) == 'Y'){
+            cout << "Please enter end date (mm dd yyyy): ";
+            cin >> eDate;
+            cout << "Please enter actual hours to completion: ";
+            cin >> ah;
+            currClient->addCase(Case(desc, sDate, eDate, rt, eh, ah));
+        }
+        else
+            currClient->addCase(Case(desc, sDate, rt, eh));
+        currClient->sortCases();
+
+    }
+
+}
+
 void UIDetectiveOffice::findCaseFromClient(){
     string query;
     if (currClient == nullptr)
@@ -227,6 +282,14 @@ void UIDetectiveOffice::findCaseFromClient(){
         getline(cin, query);
         getline(cin, query);
         currCase = currClient->findCase(query);
+    }
+}
+
+void UIDetectiveOffice::printCaseInfo(){
+    if (currCase == nullptr)
+        cout << "No case is selected" << endl;
+    else{
+        cout << *currCase << endl;
     }
 }
 
@@ -243,6 +306,8 @@ void UIDetectiveOffice::removeCaseFromClient(){
 void UIDetectiveOffice::calculateTotalDue(){
     if (currClient == nullptr)
         cout << "No Client is selected" << endl;
+    else if (currClient->numCases() == 0)
+        cout << "No cases for client yet" << endl;
     else
         currClient->calcDues();
 }
@@ -256,3 +321,4 @@ void UIDetectiveOffice::listAllClientFiles(){
     for (auto itr = clientlist.begin(); itr != clientlist.end(); itr++)
         cout << *itr << endl;
 }
+

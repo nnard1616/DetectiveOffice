@@ -5,6 +5,7 @@
 
 class Client{
   friend ostream& operator<< (ostream& osObject, const Client& query);
+  friend bool operator<(const Client& a, const Client& b);//for sorting by client lastname
   public:
     Client();
     Client(string inLname, string inFname, string inAddr, string inZip, string inEAddr);
@@ -16,6 +17,8 @@ class Client{
     void printInfo();
 
     string lname(){return LastName;}
+    void sortCases();
+    int numCases(){return caseList->size();}
 
   private:
     vector<Case> *caseList;
